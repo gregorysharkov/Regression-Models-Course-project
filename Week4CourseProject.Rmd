@@ -1,0 +1,36 @@
+---
+title: "Regression models. Week 4. Course project"
+author: "Grigory Sharkov"
+date: "23 mars 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+
+```
+
+## Summary
+The goal of this project is to analyse mtcars dataset to study correlation between the fuel consumtion of cars using manual and automatic transmition.
+
+## Exploratory data analysis  
+First, lets load and check the available data:  
+```{r observation}
+library(datasets)
+data("mtcars")
+head(mtcars)
+
+ggplot(mtcars,aes(x=factor(am),y=mpg)) + 
+  geom_boxplot() +
+  ggtitle("Average fuel consomation depending on transmission type") +
+  scale_x_discrete(labels=c("1"="Manual","0"="Auto"))
+```  
+
+## Regression analysis  
+  In general we can see that average consumption is higher for cars automatic transmission rather than for cars with manual transmission. It can be confirmed by a regression model:  
+```{r reg1}
+fit <- lm(mpg~am, data=mtcars)
+summary(fit)
+```  
+R-squared = 0.3598 tells us that only 35% of the decrease comes from the fact of changing the transmission type and there are other factors that influence 65% of the change.
